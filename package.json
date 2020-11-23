@@ -1,0 +1,28 @@
+{
+  "name": "trinitycore-srp6",
+  "version": "1.0.0",
+  "description": "Generate verifier for TrinityCore SRP6 authentication.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Miorey/trinitycore-srp6.git"
+  },
+  "keywords": [
+    "TrinityCore",
+    "SRP6"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Miorey/trinitycore-srp6/issues"
+  },
+  "homepage": "https://github.com/Miorey/trinitycore-srp6#readme",
+  "dependencies": {
+    "big-integer": "^1.6.48",
+    "bigint-buffer": "^1.1.5",
+    "crypto": "^1.0.1"
+  }
+}
