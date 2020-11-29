@@ -11,6 +11,6 @@ module.exports = {
     "rules": {
         'no-console': 'off',
         'no-debugger': 'off',
-        'semi': [2, "always
+        'semi': [2, "never"]
     }
-};
+}
