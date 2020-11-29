@@ -30,17 +30,17 @@ function assertIsBuffer (arg, argname) {
  * @param {Buffer} salt
  * @param {string} identity
  * @param {string} password
- * @return {bigint}
+ * @return {BigInteger}
  * compute the intermediate value x as a hash of three buffers:
  * salt, identity, and password.  And a colon.  FOUR buffers.
  *
  *      x = LE(H(s | H(I | ":" | P)))
  *
  * params:
- *         salt (buffer)    salt
- *         I (buffer)       user identity
- *         P (buffer)       user password
- *         LE               little endian
+ *         salt     (buffer)    salt
+ *         identity (string)    user identity
+ *         password (string)    user password
+ *         LE                   little endian
  *
  * returns: x (bignum)      user secret
  */
@@ -74,10 +74,10 @@ function getX (params, salt, identity, password) {
  *
  * params:
  *         params (obj)     group parameters, with .N, .g, .hash
- *         salt (buffer)    salt
- *         I (buffer)       user identity
- *         P (buffer)       user password
- *         LE               little endian
+ *         salt (buffer)        salt
+ *         identity (string)    user identity
+ *         identity (string)    user password
+ *         LE                   little endian
  *
  */
 function computeVerifier (params, salt, identity, password) {
