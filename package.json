@@ -21,12 +21,12 @@
   },
   "homepage": "https://github.com/Miorey/trinitycore-srp6#readme",
   "dependencies": {
-    "big-integer": "^1.6.48",
+    "big-integer": "^1.6.49",
     "bigint-buffer": "^1.1.5",
     "crypto": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "^7.14.0",
-    "mocha": "^8.2.1"
+    "eslint": "^7.32.0",
+    "mocha": "^8.4.0"
   }
 }

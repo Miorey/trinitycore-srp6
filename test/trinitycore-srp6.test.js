@@ -1,16 +1,22 @@
 /*jshint esversion: 6 */
 /* eslint-env node */
-"use strict";
+"use strict"
 
+const crypto = require(`crypto`)
+const { computeVerifier, params }  = require(`../index`)
 
 /**
  * Created by clem on 4/4/17.
  */
-'use strict';
+'use strict'
 
-describe("Translator test", function() {
+describe("test verifier", function() {
 
-    it("Empty Test", function() {
+    it("Test verifier generate from salt", function() {
+        crypto.randomBytes(32, (err, buf) => {
+            if (err) throw err;
+            computeVerifier(params.trinitycore, buf, `tic`, `tac`);
+        });
     })
 
 })
