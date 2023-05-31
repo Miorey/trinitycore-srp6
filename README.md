@@ -1,18 +1,24 @@
-# TrinityCore SRP6
+# TrinityCore / AzerothCore SRP6
 This library is used to generate the SRP6 verifier for 
-TrinityCore (3.3.5). This library works for TDB 335.20101 and above.
+TrinityCore (3.3.5) / AzerothCore.
 
 ## Usage
 To install \
 `npm install trinitycore-srp6 --save` \
 
-Generate verifier with default TrinityCore values:
+Generate verifier with default values:
 ```js
 const { computeVerifier, params } = require(`trinitycore-srp6`)
-const myVerifier = computeVerifier(
+const myTrinityVerifier = computeVerifier(
     params.trinitycore, 
     Buffer.from(salt), 
     username.toUpperCase(), 
+    password.toUpperCase()
+)
+const myAzerothVerifier = computeVerifier(
+    params.azerothcore,
+    Buffer.from(salt),
+    username.toUpperCase(),
     password.toUpperCase()
 )
 ```

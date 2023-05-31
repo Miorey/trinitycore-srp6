@@ -30,4 +30,14 @@ export namespace params {
         const g: bigint;
         const hash: string;
     }
+    namespace azerothcore {
+        const N_length_bits_1: number;
+        export { N_length_bits_1 as N_length_bits };
+        const N_1: bigint;
+        export { N_1 as N };
+        const g_1: bigint;
+        export { g_1 as g };
+        const hash_1: string;
+        export { hash_1 as hash };
+    }
 }

@@ -13,6 +13,12 @@ const params = {
         N: BigInt(`0x894B645E89E1535BBDAD5B8B290650530801B18EBFBF5E8FAB3C82872A3E9BB7`),
         g: BigInt(`0x7`),
         hash: `sha1`
+    },
+    azerothcore: {
+        N_length_bits: 256,
+        N: BigInt(`0x894B645E89E1535BBDAD5B8B290650530801B18EBFBF5E8FAB3C82872A3E9BB7`),
+        g: BigInt(`0x7`),
+        hash: `sha1`
     }
 }
 
