@@ -21,9 +21,6 @@ function assertIsBuffer (arg, argname) {
     assert_(Buffer.isBuffer(arg), `Type error: ` + argname + ` must be a buffer`)
 }
 
-/*
-
- */
 /**
  *
  * @param {{}} params
@@ -42,7 +39,7 @@ function assertIsBuffer (arg, argname) {
  *         password (string)    user password
  *         LE                   little endian
  *
- * returns: x (bignum)      user secret
+ * returns: {bigint}      user secret
  */
 function getX (params, salt, identity, password) {
     assertIsBuffer(salt, `salt (salt)`)
