@@ -1,6 +1,6 @@
 {
   "name": "trinitycore-srp6",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generate verifier for TrinityCore SRP6 authentication.",
   "main": "index.js",
   "scripts": {
