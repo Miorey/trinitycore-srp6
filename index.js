@@ -1,12 +1,25 @@
 const bigintBuffer = require(`bigint-buffer`)
-const BigInteger = require(`big-integer`)
-
 const crypto = require(`crypto`)
 
-function assert_ (val, msg) {
-    if (!val) { throw new Error(msg || `assertion`) }
+/**
+ * Throws an error if the condition is not met.
+ * @param {boolean} val - The condition to check.
+ * @param {string} [msg='assertion'] - The error message.
+ */
+function assert_ (val, msg = `assertion`) {
+    if (!val) { throw new Error(msg) }
 }
 
+/**
+ * Parameters for cryptographic operations.
+ * @typedef {Object} Params
+ * @property {number} N_length_bits - Length of N in bits.
+ * @property {BigInt} N - Large safe prime.
+ * @property {BigInt} g - Generator.
+ * @property {string} hash - Hash function.
+ */
+
+/** @type {Object<string, Params>} */
 const params = {
     trinitycore: {
         N_length_bits: 256,
@@ -22,35 +35,49 @@ const params = {
     }
 }
 
-function assertIsBuffer (arg, argname) {
-    argname = argname || `arg`
-    assert_(Buffer.isBuffer(arg), `Type error: ` + argname + ` must be a buffer`)
+/**
+ * Computes (base ** exponent) % modulus using BigInts, without intermediate overflows.
+ * @param {BigInt} base - The base number.
+ * @param {BigInt} exponent - The exponent.
+ * @param {BigInt} modulus - The modulus.
+ * @returns {BigInt} - The result of (base ** exponent) % modulus.
+ */
+function modPow(base, exponent, modulus) {
+    let result = BigInt(1)
+    base = base % modulus
+
+    while (exponent > 0) {
+        if (exponent % 2n === 1n) {  // If the exponent is odd
+            result = (result * base) % modulus
+        }
+        exponent = exponent >> 1n  // Divide the exponent by 2
+        base = (base * base) % modulus
+    }
+    return result
+}
+
+
+/**
+ * Asserts that the argument is a buffer.
+ * @param {Buffer} arg - The argument to check.
+ * @param {string} [argname='arg'] - Name of the argument.
+ */
+function assertIsBuffer (arg, argname = `arg`) {
+    assert_(Buffer.isBuffer(arg), `Type error: ${argname} must be a buffer`)
 }
 
 /**
- *
- * @param {{}} params
- * @param {Buffer} salt
- * @param {string} identity
- * @param {string} password
- * @return {BigInteger}
- * compute the intermediate value x as a hash of three buffers:
- * salt, identity, and password.  And a colon.  FOUR buffers.
- *
- *      x = LE(H(s | H(I | ":" | P)))
- *
- * params:
- *         salt     (buffer)    salt
- *         identity (string)    user identity
- *         password (string)    user password
- *         LE                   little endian
- *
- * returns: {bigint}      user secret
+ * Computes the intermediate value x.
+ * @param {Params} params - Group parameters.
+ * @param {Buffer} salt - Salt.
+ * @param {string} identity - User identity.
+ * @param {string} password - User password.
+ * @returns {BigInt} - Computed user secret.
  */
 function getX (params, salt, identity, password) {
-    assertIsBuffer(salt, `salt (salt)`)
+    assertIsBuffer(salt, `salt`)
     const hashIP = crypto.createHash(params.hash)
-        .update(identity + `:` + password)
+        .update(`${identity}:${password}`)
         .digest()
     const hashX = crypto.createHash(params.hash)
         .update(salt)
@@ -60,35 +87,19 @@ function getX (params, salt, identity, password) {
 }
 
 /**
- *
- * @param {{}} params (obj) group parameters, with .N, .g, .hash
- * @param {Buffer} salt
- * @param {string} identity
- * @param {string} password
- * @return {Buffer}
- * The verifier is calculated as described in Section 3 of [SRP-RFC].
- * We give the algorithm here for convenience.
- *
- * The verifier (v) is little endian computed based on the salt (s), user name (I),
- * password (P), and group parameters (N, g).
- *
- *         x = LE(H(s | H(user | ":" | pass)))
- *         v = LE(g^x % N)
- *
- * params:
- *         params (obj)     group parameters, with .N, .g, .hash
- *         salt (buffer)        salt
- *         identity (string)    user identity
- *         identity (string)    user password
- *         LE                   little endian
- *
+ * Computes the verifier.
+ * @param {Params} params - Group parameters.
+ * @param {Buffer} salt - Salt.
+ * @param {string} identity - User identity.
+ * @param {string} password - User password.
+ * @returns {Buffer} - Computed verifier.
  */
 function computeVerifier (params, salt, identity, password) {
     const x = getX(params, salt, identity, password)
     const g = params.g
     const N = params.N
-    const verifier = BigInteger(g).modPow(x, N)
-    const lEVerifier = verifier.value.toString(16).match(/.{2}/g).reverse().join(``)
+    const verifier = modPow(g, x, N)
+    const lEVerifier = verifier.toString(16).match(/.{2}/g).reverse().join(``)
     return Buffer.from(lEVerifier, `hex`)
 }
 

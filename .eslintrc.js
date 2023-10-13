@@ -1,16 +1,43 @@
 module.exports = {
-    "env": {
-        "commonjs": true,
-        "es2021": true,
-        "node": true
+    root: true,
+    parserOptions: {
+        sourceType: `module`,
+        ecmaVersion: 2020,
+        ecmaFeatures: {
+            globalReturn: false,
+            impliedStrict: false,
+            jsx: false,
+            experimentalObjectRestSpread: true
+        }
     },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "ecmaVersion": 12
+    env: {
+        browser: true,
+        node: true,
+        es2020: true
     },
-    "rules": {
-        'no-console': 'off',
-        'no-debugger': 'off',
-        'semi': [2, "never"]
-    }
+    extends: [
+        `eslint:recommended`
+    ],
+    rules: {
+        indent: [
+            `error`,
+            4
+        ],
+        "linebreak-style": [
+            `error`,
+            `unix`
+        ],
+        "quote-props": [`error`, `as-needed`],
+        quotes: [
+            `error`,
+            `backtick`
+        ],
+        "no-console": `off`,
+        semi: [
+            `error`,
+            `never`
+        ]
+    },
+    // required to lint *.vue files
+    plugins: [],
 }
