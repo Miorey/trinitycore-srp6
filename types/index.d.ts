@@ -9,11 +9,11 @@ export type Params = {
     /**
      * - Large safe prime.
      */
-    N: BigInt;
+    N: bigint;
     /**
      * - Generator.
      */
-    g: BigInt;
+    g: bigint;
     /**
      * - Hash function.
      */
@@ -32,11 +32,11 @@ export function computeVerifier(params: Params, salt: Buffer, identity: string, 
  * Parameters for cryptographic operations.
  * @typedef {Object} Params
  * @property {number} N_length_bits - Length of N in bits.
- * @property {BigInt} N - Large safe prime.
- * @property {BigInt} g - Generator.
+ * @property {bigint} N - Large safe prime.
+ * @property {bigint} g - Generator.
  * @property {string} hash - Hash function.
  */
 /** @type {Object<string, Params>} */
 export const params: {
     [x: string]: Params;
-};
+}

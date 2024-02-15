@@ -14,8 +14,8 @@ function assert_ (val, msg = `assertion`) {
  * Parameters for cryptographic operations.
  * @typedef {Object} Params
  * @property {number} N_length_bits - Length of N in bits.
- * @property {BigInt} N - Large safe prime.
- * @property {BigInt} g - Generator.
+ * @property {bigint} N - Large safe prime.
+ * @property {bigint} g - Generator.
  * @property {string} hash - Hash function.
  */
 
@@ -37,10 +37,10 @@ const params = {
 
 /**
  * Computes (base ** exponent) % modulus using BigInts, without intermediate overflows.
- * @param {BigInt} base - The base number.
- * @param {BigInt} exponent - The exponent.
- * @param {BigInt} modulus - The modulus.
- * @returns {BigInt} - The result of (base ** exponent) % modulus.
+ * @param {bigint} base - The base number.
+ * @param {bigint} exponent - The exponent.
+ * @param {bigint} modulus - The modulus.
+ * @returns {bigint} - The result of (base ** exponent) % modulus.
  */
 function modPow(base, exponent, modulus) {
     let result = BigInt(1)

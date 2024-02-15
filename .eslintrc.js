@@ -2,7 +2,7 @@ module.exports = {
     root: true,
     parserOptions: {
         sourceType: `module`,
-        ecmaVersion: 2020,
+        ecmaVersion: 2018,
         ecmaFeatures: {
             globalReturn: false,
             impliedStrict: false,
@@ -16,7 +16,8 @@ module.exports = {
         es2020: true
     },
     extends: [
-        `eslint:recommended`
+        `eslint:recommended`,
+        `plugin:@typescript-eslint/recommended`
     ],
     rules: {
         indent: [
