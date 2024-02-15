@@ -22,8 +22,7 @@
   "homepage": "https://github.com/Miorey/trinitycore-srp6#readme",
   "dependencies": {
     "big-integer": "^1.6.51",
-    "bigint-buffer": "^1.1.5",
-    "crypto": "^1.0.1"
+    "bigint-buffer": "^1.1.5"
   },
   "devDependencies": {
     "@types/node": "^20.2.5",
