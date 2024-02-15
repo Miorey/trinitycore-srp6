@@ -1,5 +1,6 @@
-const crypto = require(`crypto`)
-const { computeVerifier, params }  = require(`../index`)
+import * as crypto from 'crypto'
+import { computeVerifier, params } from '../index.js'
+
 
 describe(`test verifier`, function() {
 

@@ -1,5 +1,5 @@
-const bigintBuffer = require(`bigint-buffer`)
-const crypto = require(`crypto`)
+import * as bigintBuffer from "bigint-buffer"
+import * as crypto from "crypto"
 
 /**
  * Throws an error if the condition is not met.
@@ -20,7 +20,7 @@ function assert_ (val, msg = `assertion`) {
  */
 
 /** @type {Object<string, Params>} */
-const params = {
+export const params = {
     trinitycore: {
         N_length_bits: 256,
         N: BigInt(`0x894B645E89E1535BBDAD5B8B290650530801B18EBFBF5E8FAB3C82872A3E9BB7`),
@@ -42,7 +42,7 @@ const params = {
  * @param {bigint} modulus - The modulus.
  * @returns {bigint} - The result of (base ** exponent) % modulus.
  */
-function modPow(base, exponent, modulus) {
+const modPow = (base, exponent, modulus) => {
     let result = BigInt(1)
     base = base % modulus
 
@@ -62,7 +62,7 @@ function modPow(base, exponent, modulus) {
  * @param {Buffer} arg - The argument to check.
  * @param {string} [argname='arg'] - Name of the argument.
  */
-function assertIsBuffer (arg, argname = `arg`) {
+const assertIsBuffer = (arg, argname = `arg`) => {
     assert_(Buffer.isBuffer(arg), `Type error: ${argname} must be a buffer`)
 }
 
@@ -74,7 +74,7 @@ function assertIsBuffer (arg, argname = `arg`) {
  * @param {string} password - User password.
  * @returns {BigInt} - Computed user secret.
  */
-function getX (params, salt, identity, password) {
+const getX = (params, salt, identity, password) => {
     assertIsBuffer(salt, `salt`)
     const hashIP = crypto.createHash(params.hash)
         .update(`${identity}:${password}`)
@@ -94,16 +94,11 @@ function getX (params, salt, identity, password) {
  * @param {string} password - User password.
  * @returns {Buffer} - Computed verifier.
  */
-function computeVerifier (params, salt, identity, password) {
+export const computeVerifier = (params, salt, identity, password) => {
     const x = getX(params, salt, identity, password)
     const g = params.g
     const N = params.N
     const verifier = modPow(g, x, N)
     const lEVerifier = verifier.toString(16).match(/.{2}/g).reverse().join(``)
     return Buffer.from(lEVerifier, `hex`)
-}
-
-module.exports = {
-    computeVerifier,
-    params
 }
