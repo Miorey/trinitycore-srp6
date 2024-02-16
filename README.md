@@ -12,20 +12,19 @@ const { computeVerifier, params } = require(`trinitycore-srp6`)
 const myTrinityVerifier = computeVerifier(
     params.trinitycore, 
     Buffer.from(salt), 
-    username.toUpperCase(), 
-    password.toUpperCase()
+    username, 
+    password
 )
 const myAzerothVerifier = computeVerifier(
     params.azerothcore,
     Buffer.from(salt),
-    username.toUpperCase(),
-    password.toUpperCase()
+    username,
+    password
 )
 ```
 
 Generate verifier with custom values
 ```js
-
 const BigInteger = require(`big-integer`)   
 const myParam = {
         N_length_bits: 256,
@@ -36,8 +35,8 @@ const myParam = {
 const myVerifier = computeVerifier(
     myParam, 
     Buffer.from(salt), 
-    username.toUpperCase(), 
-    password.toUpperCase()
+    username, 
+    password
 )
 ```
 
