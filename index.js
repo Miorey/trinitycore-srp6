@@ -34,7 +34,7 @@ const defaultParams = {
 }
 
 
-/** @type {Object<string, Params>} */
+/** @type {{[K in 'trinitycore' | 'azerothcore']: Params}} */
 export const params = {
     trinitycore: {
         ...defaultParams

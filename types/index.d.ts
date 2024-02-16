@@ -1,6 +1,7 @@
-/** @type {Object<string, Params>} */
+/** @type {{[K in 'trinitycore' | 'azerothcore']: Params}} */
 export const params: {
-    [x: string]: Params;
+    trinitycore: Params;
+    azerothcore: Params;
 }
 export function computeVerifier(params: Params, salt: Buffer, identity: string, password: string): Buffer;
 /**
