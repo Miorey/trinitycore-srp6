@@ -1,10 +1,11 @@
 {
   "name": "trinitycore-srp6",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Generate verifier for TrinityCore SRP6 authentication.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./test/"
+    "test": "mocha ./test/",
+    "prepublish": "npx -p typescript tsc index.js  --declaration --allowJs --emitDeclarationOnly --outDir types"
   },
   "repository": {
     "type": "git",
@@ -12,6 +13,7 @@
   },
   "keywords": [
     "TrinityCore",
+    "AzerothCore",
     "SRP6"
   ],
   "author": "",
@@ -22,14 +24,17 @@
   "homepage": "https://github.com/Miorey/trinitycore-srp6#readme",
   "dependencies": {
     "big-integer": "^1.6.51",
-    "bigint-buffer": "^1.1.5",
-    "crypto": "^1.0.1"
+    "bigint-buffer": "^1.1.5"
   },
   "devDependencies": {
     "@types/node": "^20.2.5",
-    "eslint": "^7.32.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "@typescript-eslint/parser": "^7.0.1",
+    "chai": "^5.1.0",
+    "eslint": "^8.51.0",
     "mocha": "10.2.0",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.0.4"
-  }
+  },
+  "type": "module"
 }
