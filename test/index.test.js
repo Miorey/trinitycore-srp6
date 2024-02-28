@@ -45,3 +45,25 @@ describe(`Test computeVerifier`, function() {
         })
     })
 })
+
+describe(`Test custom params`, function() {
+    it(`Test verifier`, () => {
+        const salt = Buffer.from(janeDoeAccount.salt, `hex`)
+        const myParam = {
+            N_length_bits: 256,
+            N: BigInt(`0x8A4B645E89E1535BBDAD5B8B290650530801B18EBFBF5E8FAB3C82872A3E9BB7`),
+            g: BigInt(`0x7`),
+            hash: `sha1`
+        }
+
+        const myVerifier = computeVerifier(
+            myParam,
+            salt,
+            janeDoeAccount.username,
+            janeDoeAccount.password
+        )
+        const strVerifier = myVerifier.toString(`hex`).toUpperCase()
+
+        expect(`B1EBEABC2AEE9284E6B48E300BB4D47D05A952A248C2B37DB1DF6143568DB449`).to.equal(strVerifier)
+    })
+})
