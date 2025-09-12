@@ -1,4 +1,3 @@
-import * as bigintBuffer from "bigint-buffer"
 import * as crypto from "crypto"
 
 /**
@@ -76,6 +75,17 @@ const assertIsBuffer = (arg, argname = `arg`) => {
 }
 
 /**
+ * Converts a little-endian buffer to a BigInt.
+ * @param {Buffer} buf - Buffer in little-endian format.
+ * @returns {bigint} - Resulting BigInt value.
+ */
+const toBigIntLE = (buf) => {
+    assertIsBuffer(buf, `buf`)
+    const hex = Buffer.from(buf).reverse().toString(`hex`) || `0`
+    return BigInt(`0x${hex}`)
+}
+
+/**
  * Computes the intermediate value x.
  * @param {Params} params - Group parameters.
  * @param {Buffer} salt - Salt.
@@ -92,7 +102,7 @@ const getX = (params, salt, identity, password) => {
         .update(salt)
         .update(hashIP)
         .digest()
-    return bigintBuffer.toBigIntLE(hashX)
+    return toBigIntLE(hashX)
 }
 
 /**

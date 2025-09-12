@@ -2,7 +2,7 @@
 export const params: {
     trinitycore: Params;
     azerothcore: Params;
-}
+};
 export function computeVerifier(params: Params, salt: Buffer, identity: string, password: string): Buffer;
 /**
  * Parameters for cryptographic operations.
