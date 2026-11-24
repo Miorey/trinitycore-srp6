@@ -86,6 +86,27 @@ const toBigIntLE = (buf) => {
 }
 
 /**
+ * Converts a BigInt to a little-endian buffer of a fixed length, padded with zero bytes,
+ * like BigNumber::ToByteArray<32>() in the C++ core.
+ * @param {bigint} value - The value to convert.
+ * @param {number} length - The buffer length in bytes.
+ * @returns {Buffer} - Little-endian buffer.
+ */
+const toBufferLE = (value, length) => {
+    const hex = value.toString(16).padStart(length * 2, `0`)
+    assert_(hex.length === length * 2, `value does not fit in ${length} bytes`)
+    return Buffer.from(hex, `hex`).reverse()
+}
+
+/**
+ * Uppercases only the basic Latin letters a-z, like Utf8ToUpperOnlyLatin() in the C++ core.
+ * String.prototype.toUpperCase() would also change accented letters (é -> É, ß -> SS).
+ * @param {string} str - The string to convert.
+ * @returns {string} - The converted string.
+ */
+const toUpperOnlyLatin = (str) => str.replace(/[a-z]/g, (c) => c.toUpperCase())
+
+/**
  * Computes the intermediate value x.
  * @param {Params} params - Group parameters.
  * @param {Buffer} salt - Salt.
@@ -120,10 +141,7 @@ export const computeVerifier = (params, salt, identity, password) => {
     if(password.length > params?.passwordMaxLength) {
         throw new RangeError(`The password should have maximum ${params.passwordMaxLength} characters`)
     }
-    const x = getX(params, salt, identity.toUpperCase(), password.toUpperCase())
-    const g = params.g
-    const N = params.N
-    const verifier = modPow(g, x, N)
-    const lEVerifier = verifier.toString(16).match(/.{2}/g).reverse().join(``)
-    return Buffer.from(lEVerifier, `hex`)
+    const x = getX(params, salt, toUpperOnlyLatin(identity), toUpperOnlyLatin(password))
+    const verifier = modPow(params.g, x, params.N)
+    return toBufferLE(verifier, params.N_length_bits / 8)
 }
